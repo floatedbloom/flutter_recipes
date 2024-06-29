@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
 
       appBar: AppBar(
-        title: const Text("R E C I P E   A P P"),
+        title: const Center(child: Text("R E C I P E   A P P")),
       ),
 
       bottomNavigationBar: MyBottomNavBar(

@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipes/pages/home_page.dart';
-import 'package:hive_flutter/adapters.dart';
+import 'package:sqflite/sqflite.dart';
 
 void main() async {
-  //await for Hive (remember favorites, etc.)
-  await Hive.initFlutter();
-
-  //open Hive box
-
-  var box = Hive.openBox('box');
+  //await sqlite
+  var db = await openDatabase('app_db.db');
 
   runApp(const MyApp());
 }
