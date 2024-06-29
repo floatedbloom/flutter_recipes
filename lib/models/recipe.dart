@@ -8,12 +8,10 @@ class Recipe {
   final double health;
   final String type;
   final String diet;
-  final String flavor;
-  final Image image;
+  final ImageProvider image;
 
   Recipe({
     required this.name, required this.rating, required this.creator, required this.ingredients,
-    required this.health, required this.type, required this.diet, required this.flavor, 
-    required this.image,
+    required this.health, required this.type, required this.diet, required this.image,
     });
 }

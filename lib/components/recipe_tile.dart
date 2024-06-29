@@ -1,24 +1,110 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_recipes/components/recipe_expand.dart';
 import 'package:flutter_recipes/models/recipe.dart';
+import 'dart:ui';
 
 // ignore: must_be_immutable
 class RecipeTile extends StatelessWidget {
   Recipe recipe;
-  void Function()? onTap;
 
-  RecipeTile({super.key, required this.recipe, required this.onTap});
+  RecipeTile({super.key, required this.recipe});
+
+  //add to favorite function
+  void addFavorite(Recipe r) {
+
+  }
+
+  //add to later function
+  void addLater(Recipe r) {
+
+  }
+
+  //rating function 
+  void rateRecipe(Recipe r) {
+
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      //send to expanded view if you click a recipe tile
+      //open expanded view if you click a recipe tile
       onTap: () {
-        Navigator.push(
-          context, 
-          MaterialPageRoute(
-            builder: (context) => ExpandedView(name: recipe.name),
-          ),
+        showCupertinoModalPopup(
+          context: context, 
+          builder: (BuildContext context) {
+            return Center(
+              child: Container(
+                //not quite fully screen-sized
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.height * 0.9,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  //blurs the bakcground
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                    child: CupertinoPopupSurface(
+                      child: Material(
+                        color: Colors.transparent,
+                        //scrollable
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              //top is recipe name
+                              Container(
+                                padding: const EdgeInsets.all(16.0),
+                                color: const Color.fromARGB(255, 149, 91, 87),
+                                child: Text(
+                                  '${recipe.name}',
+                                  style: const TextStyle(color: Colors.white, fontSize: 24),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              //info
+                              Container(
+                                padding: const EdgeInsets.all(16.0),
+                                color: Color.fromARGB(255, 87, 149, 143),
+                                child: Column(
+                                  children: [
+                                    Text('Creator: ${recipe.creator}'),
+                                    Text('Rating: ${recipe.rating}'),
+                                    Text('Healthiness: ${recipe.health}'),
+                                    Text('Type of food: ${recipe.type}'),
+                                    Text('Specified diet: ${recipe.diet}'),
+                                    Text('Ingredients: ${recipe.ingredients}'),
+                                    Image(image: recipe.image)
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 10),                              
+                              //5 star rating scale
+
+                              const SizedBox(height: 10),
+                              //favorite button
+                              CupertinoButton(
+                                child: const Text('Favorite'),
+                                onPressed: () {
+                                  addFavorite(recipe);
+                                },
+                              ),
+                              const SizedBox(height: 5),
+                              //close button
+                              CupertinoButton(
+                                child: const Text('Close'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
         );
       },
       child: Container(
@@ -46,7 +132,7 @@ class RecipeTile extends StatelessWidget {
             //image clipped
             ClipRRect(
               borderRadius: BorderRadius.circular(15),
-              child: recipe.image,
+              child: Image(image: recipe.image),
             ),
             
             //smaller elements
@@ -71,7 +157,9 @@ class RecipeTile extends StatelessWidget {
                   ),
                   //save for later button
                   GestureDetector(
-                    onTap: onTap,
+                    onTap: () {
+                      addLater(recipe);
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(21),
                       decoration: const BoxDecoration(
