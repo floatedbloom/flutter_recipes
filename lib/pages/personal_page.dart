@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//cant create a recipe with a name you already used
+
 class PersonalPage extends StatefulWidget {
   const PersonalPage({super.key});
 

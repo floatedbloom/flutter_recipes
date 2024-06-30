@@ -7,19 +7,21 @@ import 'dart:ui';
 import 'package:flutter_recipes/session/session_manager.dart';
 
 //5satr rating could take a while
-//need 3 functions to be completed
+
+//need 2 functions to be completed
 
 // ignore: must_be_immutable
 class RecipeTile extends StatelessWidget {
   Recipe recipe;
   final DatabaseHelper dbHelper = DatabaseHelper();
-  int userId = SessionManager.instance.currentUserId ?? 0;
 
   RecipeTile({super.key, required this.recipe});
 
   //add to favorite function
   void addFavorite(Recipe r) async {
-    //dbHelper.addFavoriteRecipe(userId, recipeId);
+    int userId = SessionManager.instance.currentUserId ?? 0;
+    int recipeId = await DatabaseHelper().getIdByRecipe(recipe) ?? 0;
+    dbHelper.addFavoriteRecipe(userId, recipeId);
   }
 
   //add to later function

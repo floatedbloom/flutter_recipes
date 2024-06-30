@@ -3,6 +3,8 @@ import 'package:flutter_recipes/data/database.dart';
 import 'package:flutter_recipes/pages/login.dart';
 
 class CreateAccount extends StatefulWidget {
+  const CreateAccount({super.key});
+
   @override
   _CreateAccountState createState() => _CreateAccountState();
 }

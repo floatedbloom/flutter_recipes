@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter_recipes/models/recipe.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -19,7 +20,7 @@ class DatabaseHelper {
     String path = join(await getDatabasesPath(), 'app.db');
     return await openDatabase(
       path,
-      version: 1,
+      version: 1, 
       onCreate: _onCreate,
     );
   }
@@ -132,6 +133,22 @@ class DatabaseHelper {
   }
 
   // Recipe methods
+  Future<int?> getIdByRecipe(Recipe recipe) async {
+    final Database db = await database;
+    List<Map<String, dynamic>> results = await db.query(
+      'recipes',
+      columns: ['id'],
+      where: 'name = ? AND creator = ? AND health = ? AND type = ? AND diet = ?',
+      whereArgs: [recipe.name, recipe.creator, recipe.health, recipe.type, recipe.diet],
+    );
+    //check for emptiness
+    if (results.isNotEmpty) {
+      return results.first['id'] as int;
+    } else {
+      return null;
+    }
+  }
+
   Future<int> insertRecipe(Map<String, dynamic> recipe) async {
     Database db = await database;
     return await db.insert('recipes', recipe);

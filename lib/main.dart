@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: AuthenticationWrapper(),
     );
   }
@@ -21,6 +21,8 @@ class MyApp extends StatelessWidget {
 
 //check if needs to be sent to login or homepage
 class AuthenticationWrapper extends StatelessWidget {
+  const AuthenticationWrapper({super.key});
+
   @override
   Widget build(BuildContext context) {
     bool isLoggedIn = SessionManager.instance.isLoggedIn;
