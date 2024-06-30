@@ -21,15 +21,18 @@ class _CreateAccountState extends State<CreateAccount> {
     String password = _passwordController.text;
     String confirm = _confirmController.text;
 
+    //capture context
+    BuildContext currentContext = context;
+
     //check the 2 passwords
     if (confirm != password) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(currentContext).showSnackBar(
         const SnackBar(content: Text('Passwords do not match'))
       );
     } else {
       //craete new user as Map
       Map<String, dynamic> userMap = {
-        'name': username,
+        'username': username,
         'password': password,
         'email': email,
       };      
@@ -37,16 +40,12 @@ class _CreateAccountState extends State<CreateAccount> {
       await DatabaseHelper().insertUser(userMap);
 
       //send to login screen
-      Navigator.push(
-        context, 
+      Navigator.of(currentContext).push(
         MaterialPageRoute(
           builder: (context) => const LoginScreen()
         ),
       );
     }
-
-    
-
   }
 
   @override

@@ -19,7 +19,7 @@ class RecipeTile extends StatelessWidget {
 
   //add to favorite function
   void addFavorite(Recipe r) async {
-    dbHelper.addFavoriteRecipe(userId, recipeId);
+    //dbHelper.addFavoriteRecipe(userId, recipeId);
   }
 
   //add to later function

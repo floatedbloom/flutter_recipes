@@ -72,7 +72,7 @@ class DatabaseHelper {
     Database db = await database;
     List<Map<String, dynamic>> results = await db.query(
       'users',
-      where: 'name = ?',
+      where: 'username = ?',
       whereArgs: [username],
     );
     return results.isNotEmpty ? results.first : null;
@@ -83,7 +83,7 @@ class DatabaseHelper {
     List<Map<String, dynamic>> results = await db.query(
       'users',
       columns: ['password'],
-      where: 'name = ?',
+      where: 'username = ?',
       whereArgs: [username],
     );
     if (results.isNotEmpty) {
@@ -98,7 +98,7 @@ class DatabaseHelper {
     List<Map<String, dynamic>> results = await db.query(
       'users',
       columns: ['id'],
-      where: 'name = ?',
+      where: 'username = ?',
       whereArgs: [username],
     );
     if (results.isNotEmpty) {
