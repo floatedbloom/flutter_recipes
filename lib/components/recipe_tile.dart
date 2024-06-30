@@ -6,9 +6,7 @@ import 'dart:ui';
 
 import 'package:flutter_recipes/session/session_manager.dart';
 
-//5satr rating could take a while
-
-//need 1 functions to be completed
+//5star rating neeeded
 
 // ignore: must_be_immutable
 class RecipeTile extends StatelessWidget {
@@ -20,7 +18,9 @@ class RecipeTile extends StatelessWidget {
   //add to favorite function
   void addFavorite(Recipe r) async {
     int userId = SessionManager.instance.currentUserId ?? 0;
+    print(userId);
     int recipeId = await dbHelper.getIdByRecipe(recipe) ?? 0;
+    print(recipeId);
     dbHelper.addFavoriteRecipe(userId, recipeId);
   }
 
@@ -156,10 +156,10 @@ class RecipeTile extends StatelessWidget {
                       Text(recipe.creator, style: const TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: 5),
                       //star rating
-                      Text('\u2B50${recipe.rating}', style: const TextStyle(color: Colors.grey )),
+                      Text('\u2B50${recipe.rating}', style: const TextStyle(color: Colors.black )),
                       const SizedBox(height: 5),
                       //health rating
-                      Text('\u2764\uFE0F${recipe.health}', style: const TextStyle(color: Colors.grey )),
+                      Text('\u2764\uFE0F${recipe.health}', style: const TextStyle(color: Colors.black )),
                     ],
                   ),
                   //save for later button

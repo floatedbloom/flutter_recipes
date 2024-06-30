@@ -19,9 +19,9 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages= [
     const HotPage(),
     const SearchPage(),
+    const LaterPage(),
     const FavoritesPage(),
     const PersonalPage(),
-    const LaterPage(),
   ];
 
   void navigateBar (int index) {

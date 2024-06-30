@@ -15,4 +15,18 @@ class Recipe {
     required this.creator, required this.ingredients,
     required this.health, required this.type, required this.diet, required this.image,
     });
+
+    //convert to Map
+    Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'rating': rating,
+      'creator': creator,
+      'ingredients': ingredients.join(','),
+      'health': health,
+      'type': type,
+      'diet': diet,
+      'image': image.toString(),
+    };
+  }
 }
