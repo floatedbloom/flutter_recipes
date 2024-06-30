@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Recipe {
   final String name;
-  final double rating;
+  double rating = 5;
   final String creator;
   final List<String> ingredients;
   final double health;
@@ -11,7 +11,8 @@ class Recipe {
   final ImageProvider image;
 
   Recipe({
-    required this.name, required this.rating, required this.creator, required this.ingredients,
+    required this.name, //required this.rating, 
+    required this.creator, required this.ingredients,
     required this.health, required this.type, required this.diet, required this.image,
     });
 }

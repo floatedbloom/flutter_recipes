@@ -6,8 +6,6 @@ import 'package:flutter_recipes/pages/later_page.dart';
 import 'package:flutter_recipes/pages/personal_page.dart';
 import 'package:flutter_recipes/pages/search_page.dart';
 
-//on start, homepage w/ nav bar, init on 'hot' page, list w/ search, favorites, create
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 

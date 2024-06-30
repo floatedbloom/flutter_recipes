@@ -1,21 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_recipes/data/database.dart';
 import 'package:flutter_recipes/models/recipe.dart';
 import 'dart:ui';
+
+import 'package:flutter_recipes/session/session_manager.dart';
+
+//5satr rating could take a while
+//need 3 functions to be completed
 
 // ignore: must_be_immutable
 class RecipeTile extends StatelessWidget {
   Recipe recipe;
+  final DatabaseHelper dbHelper = DatabaseHelper();
+  int userId = SessionManager.instance.currentUserId ?? 0;
 
   RecipeTile({super.key, required this.recipe});
 
   //add to favorite function
-  void addFavorite(Recipe r) {
-
+  void addFavorite(Recipe r) async {
+    dbHelper.addFavoriteRecipe(userId, recipeId);
   }
 
   //add to later function
-  void addLater(Recipe r) {
+  void addLater(Recipe r) async {
 
   }
 
@@ -33,7 +41,7 @@ class RecipeTile extends StatelessWidget {
           context: context, 
           builder: (BuildContext context) {
             return Center(
-              child: Container(
+              child: SizedBox(
                 //not quite fully screen-sized
                 width: MediaQuery.of(context).size.width * 0.9,
                 height: MediaQuery.of(context).size.height * 0.9,
@@ -55,15 +63,15 @@ class RecipeTile extends StatelessWidget {
                                 padding: const EdgeInsets.all(16.0),
                                 color: const Color.fromARGB(255, 149, 91, 87),
                                 child: Text(
-                                  '${recipe.name}',
+                                  recipe.name,
                                   style: const TextStyle(color: Colors.white, fontSize: 24),
                                 ),
                               ),
                               const SizedBox(height: 10),
-                              //info
+                              //general info
                               Container(
                                 padding: const EdgeInsets.all(16.0),
-                                color: Color.fromARGB(255, 87, 149, 143),
+                                color: const Color.fromARGB(255, 87, 149, 143),
                                 child: Column(
                                   children: [
                                     Text('Creator: ${recipe.creator}'),
@@ -72,13 +80,13 @@ class RecipeTile extends StatelessWidget {
                                     Text('Type of food: ${recipe.type}'),
                                     Text('Specified diet: ${recipe.diet}'),
                                     Text('Ingredients: ${recipe.ingredients}'),
-                                    Image(image: recipe.image)
+                                    Image(image: recipe.image) 
                                   ],
                                 ),
                               ),
                               const SizedBox(height: 10),                              
                               //5 star rating scale
-
+                              //this is hard
                               const SizedBox(height: 10),
                               //favorite button
                               CupertinoButton(
