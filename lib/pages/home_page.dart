@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipes/components/bottom_nav.dart';
-import 'package:flutter_recipes/pages/favorites_page.dart';
+import 'package:flutter_recipes/pages/create_page.dart';
 import 'package:flutter_recipes/pages/hot_page.dart';
-import 'package:flutter_recipes/pages/later_page.dart';
 import 'package:flutter_recipes/pages/personal_page.dart';
 import 'package:flutter_recipes/pages/search_page.dart';
 
@@ -19,8 +18,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages= [
     const HotPage(),
     const SearchPage(),
-    const LaterPage(),
-    const FavoritesPage(),
+    const CreatePage(),
     const PersonalPage(),
   ];
 

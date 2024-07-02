@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-//cant create a recipe with a name you already used
+//previously created recipes, change password, 
 
 class PersonalPage extends StatefulWidget {
   const PersonalPage({super.key});

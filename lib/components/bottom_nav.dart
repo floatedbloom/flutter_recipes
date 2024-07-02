@@ -21,8 +21,7 @@ class MyBottomNavBar extends StatelessWidget {
         tabs: const [
           GButton(icon: Icons.home, text: "Hot",),
           GButton(icon: Icons.search_rounded, text: "Search",),
-          GButton(icon: Icons.save_rounded, text: "Later",),
-          GButton(icon: Icons.favorite_rounded, text: "Favorites",),
+          GButton(icon: Icons.add, text: "Create",),
           GButton(icon: Icons.person_2_rounded, text: "Personal",),
         ],
       ),
