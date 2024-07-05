@@ -159,6 +159,11 @@ class DatabaseHelper {
     return await db.query('recipes');
   }
 
+  Future<List<Map<String, dynamic>>> getUserRecipes(String username) async {
+    Database db = await database;
+    return await db.query('recipes', where: 'creator = ?', whereArgs: [username],);
+  }
+
   Future<int> updateRecipe(Map<String, dynamic> recipe) async {
     Database db = await database;
     int id = recipe['id'];
@@ -200,7 +205,7 @@ class DatabaseHelper {
   // Try Later Recipes methods
   Future<int> addLaterRecipe(int userId, int recipeId) async {
     Database db = await database;
-    return await db.insert('try_later_recipes', {
+    return await db.insert('later_recipes', {
       'user_id': userId,
       'recipe_id': recipeId,
     });
@@ -220,7 +225,7 @@ class DatabaseHelper {
     return await db.query(
       'recipes',
       columns: ['recipes.*'],
-      where: 'recipes.id IN (SELECT recipe_id FROM try_later_recipes WHERE user_id = ?)',
+      where: 'recipes.id IN (SELECT recipe_id FROM later_recipes WHERE user_id = ?)',
       whereArgs: [userId],
     );
   }
