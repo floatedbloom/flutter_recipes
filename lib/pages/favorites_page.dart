@@ -48,7 +48,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No favorite recipes.'));
+            return const Center(child: Text('No created recipes.'));
           } else {
             List<Recipe> favorites = snapshot.data!;
             return ListView.builder(

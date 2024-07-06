@@ -12,7 +12,7 @@ class PersonalPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: 500),
+          constraints: const BoxConstraints(maxHeight: 500),
           child: GridView.count(
             crossAxisCount: 2,
             mainAxisSpacing: 20.0,
