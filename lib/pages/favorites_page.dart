@@ -77,6 +77,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       userId = SessionManager.instance.currentUserId ?? 0;
                       int recipeId = await dbHelper.getIdByRecipe(recipe) ?? 0;
                       dbHelper.removeFavoriteRecipe(userId, recipeId);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Recipe removed from Favorites')),
+                      );
                     }, 
                     label: const Text('Remove'),
                     icon: const Icon(Icons.remove_circle_rounded),

@@ -77,6 +77,10 @@ class _LaterPageState extends State<LaterPage> {
                       userId = SessionManager.instance.currentUserId ?? 0;
                       int recipeId = await dbHelper.getIdByRecipe(recipe) ?? 0;
                       dbHelper.removeLaterRecipe(userId, recipeId);
+                      favorites.remove(recipe);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Recipe removed from Try Later')),
+                      );
                     }, 
                     label: const Text('Remove'),
                     icon: const Icon(Icons.remove_circle_rounded),

@@ -13,12 +13,16 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-
   final DatabaseHelper dbHelper = DatabaseHelper();
-  List<Recipe> filteredRecipes = [];
   List<Recipe> recipes = [];
+  List<Recipe> filteredRecipes = [];
 
-  //load recipes and convert them from db's to Recipe type
+  @override
+  void initState() {
+    loadRecipes();
+    super.initState();
+  }
+
   void loadRecipes() async {
     List<Map<String, dynamic>> recipeMaps = await dbHelper.getRecipes();
     List<Recipe> fetchedRecipes = recipeMaps.map((recipeMap) {
@@ -35,17 +39,10 @@ class _SearchPageState extends State<SearchPage> {
 
     setState(() {
       recipes = fetchedRecipes;
+      filteredRecipes = recipes; // Initialize filteredRecipes with all recipes
     });
   }
 
-  @override
-  //initialize to have all recipes
-  void initState() {
-    loadRecipes();
-    super.initState();
-  }
-
-  //dynamically filter recipes while typing into search
   void _onSearchChanged(String query) {
     setState(() {
       filteredRecipes = recipes.where((recipe) =>

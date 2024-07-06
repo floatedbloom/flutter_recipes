@@ -30,18 +30,23 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
 
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Center(child: Text("R E C I P E   A P P")),
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const Center(child: Text("R E C I P E   A P P")),
+        ),
+      
+        bottomNavigationBar: MyBottomNavBar(
+          onTabChange: (index) => navigateBar(index),
+        ),
+      
+        body: _pages[_selectedIndex],
       ),
-
-      bottomNavigationBar: MyBottomNavBar(
-        onTabChange: (index) => navigateBar(index),
-      ),
-
-      body: _pages[_selectedIndex],
     );
   }
 }

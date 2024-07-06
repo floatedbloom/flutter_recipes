@@ -1,12 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_recipes/data/database.dart';
 import 'package:flutter_recipes/models/recipe.dart';
 import 'package:flutter_recipes/session/session_manager.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sqflite/sqflite.dart';
 
 //cant create a recipe with a name you already used
 //show creation screen
@@ -164,7 +162,12 @@ class _CreatePageState extends State<CreatePage> {
               Padding(
                 padding: const EdgeInsets.all(25.0),
                 child: ElevatedButton(
-                  onPressed: _saveRecipe, 
+                  onPressed: () {
+                    _saveRecipe;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Recipe created')),
+                    );
+                  },
                   child: const Text("Save recipe")
                 ),
               )

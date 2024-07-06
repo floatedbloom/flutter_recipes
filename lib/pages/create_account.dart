@@ -53,33 +53,33 @@ class _CreateAccountState extends State<CreateAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Create Account')),
+      appBar: AppBar(title: const Text('C R E A T E   A C C O U N T'), automaticallyImplyLeading: false, centerTitle: true,),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
               controller: _usernameController,
-              decoration: const InputDecoration(labelText: 'Username'),
+              decoration: const InputDecoration(labelText: 'U S E R N A M E'),
             ),
             TextField(
               controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'E M A I L'),
             ),
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(labelText: 'P A S S W O R D'),
               obscureText: true,
             ),
             TextField(
               controller: _confirmController,
-              decoration: const InputDecoration(labelText: 'Confirm Password'),
+              decoration: const InputDecoration(labelText: 'C O N F I R M   P A S S W O R D'),
               obscureText: true,
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _createAccount,
-              child: const Text('Create Account'),
+              child: const Text('C R E A T E'),
             ),
           ],
         ),

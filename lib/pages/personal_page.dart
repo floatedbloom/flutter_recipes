@@ -1,55 +1,93 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipes/pages/change_password.dart';
 import 'package:flutter_recipes/pages/favorites_page.dart';
 import 'package:flutter_recipes/pages/later_page.dart';
 import 'package:flutter_recipes/pages/own_recipes.dart';
 
-//previously created recipes[delete uploaded recipe], change password, favorites, laters
-
-class PersonalPage extends StatefulWidget {
+class PersonalPage extends StatelessWidget {
   const PersonalPage({super.key});
 
-  @override
-  State<PersonalPage> createState() => _PersonalPageState();
-}
-
-class _PersonalPageState extends State<PersonalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: GridView.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 20.0,
+          crossAxisSpacing: 20.0,
+          padding: const EdgeInsets.all(20.0),
           children: [
             ElevatedButton(
+              style: ButtonStyle(
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: const BorderSide(color: Colors.blueGrey)
+                  )
+                )
+              ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoritesPage()));
-              }, 
-              child: const Text("Favorites")
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FavoritesPage()),
+                );
+              },
+              child: const Text("Favorites"),
             ),
-            const SizedBox(height: 20,),
             ElevatedButton(
+              style: ButtonStyle(
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: const BorderSide(color: Colors.blueGrey)
+                  )
+                )
+              ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const LaterPage()));
-              }, 
-              child: const Text("Try Later")
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LaterPage()),
+                );
+              },
+              child: const Text("Try Later"),
             ),
-            const SizedBox(height: 20,),
             ElevatedButton(
+              style: ButtonStyle(
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: const BorderSide(color: Colors.blueGrey)
+                  )
+                )
+              ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const OwnRecipes()));
-              }, 
-              child: const Text("Creations")
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const OwnRecipes()),
+                );
+              },
+              child: const Text("My Recipes"),
             ),
-            const SizedBox(height: 20,),
             ElevatedButton(
+              style: ButtonStyle(
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: const BorderSide(color: Colors.blueGrey)
+                  )
+                )
+              ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoritesPage()));
-              }, 
-              child: const Text("Change Password")
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ChangePassword()),
+                );
+              },
+              child: const Text("Change Password"),
             ),
           ],
         ),
-      )
+      ),
     );
   }
 }

@@ -53,6 +53,7 @@ class _OwnRecipesState extends State<OwnRecipes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Center(child: Text('M Y   R E C I P E S'))),
       body: Expanded(
               child: ListView.builder(
                 itemCount: recipes.length,

@@ -92,6 +92,9 @@ class RecipeTile extends StatelessWidget {
                                 child: const Text('Favorite'),
                                 onPressed: () {
                                   addFavorite(recipe);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Recipe added to Favorites')),
+                                  );
                                 },
                               ),
                               const SizedBox(height: 5),
@@ -166,6 +169,9 @@ class RecipeTile extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       addLater(recipe);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Recipe added to Try Later')),
+                      );
                     },
                     child: Container(
                       padding: const EdgeInsets.all(21),
