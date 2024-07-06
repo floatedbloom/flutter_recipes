@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 // ignore: must_be_immutable
@@ -19,7 +20,7 @@ class MyBottomNavBar extends StatelessWidget {
         onTabChange: (value) => onTabChange!(value),
         mainAxisAlignment: MainAxisAlignment.center,
         tabs: const [
-          GButton(icon: Icons.home, text: "Hot",),
+          GButton(icon: FontAwesomeIcons.fire, text: "Hot",),
           GButton(icon: Icons.search_rounded, text: "Search",),
           GButton(icon: Icons.add, text: "Create",),
           GButton(icon: Icons.person_2_rounded, text: "Personal",),

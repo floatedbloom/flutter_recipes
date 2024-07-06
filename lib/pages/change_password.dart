@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipes/data/database.dart';
+import 'package:flutter_recipes/session/session_manager.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -9,6 +11,10 @@ class ChangePassword extends StatefulWidget {
 
 class _ChangePasswordState extends State<ChangePassword> {
   final _formKey = GlobalKey<FormState>();
+
+  final DatabaseHelper dbHelper = DatabaseHelper();
+  final String username = SessionManager.instance.currentUsername as String;
+
   final TextEditingController _oldPasswordController = TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
@@ -21,23 +27,33 @@ class _ChangePasswordState extends State<ChangePassword> {
     super.dispose();
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      // Implement password change logic here
       String oldPassword = _oldPasswordController.text;
       String newPassword = _newPasswordController.text;
       String confirmPassword = _confirmPasswordController.text;
 
-      // Example validation - check if newPassword matches confirmPassword
-      if (newPassword == confirmPassword) {
-        // Perform password change logic, e.g., update in database
-        // Navigate back or show success message
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Password changed successfully')),
-        );
+      String realOld = await dbHelper.getPasswordByUsername(username);
+
+      if (realOld == oldPassword) {
+        //check if newPassword matches confirmPassword
+        if (newPassword == confirmPassword) {
+          //update in database
+          String username = SessionManager.instance.currentUsername as String;
+          await dbHelper.updatePassword(username, newPassword);
+          //visual
+          Navigator.of(context).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Password changed successfully')),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Passwords do not match')),
+          );
+        }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Passwords do not match')),
+            const SnackBar(content: Text('Old password does not match')),
         );
       }
     }
@@ -47,7 +63,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Change Password'),
+        title: const Text('C H A N G E   P A S S W O R D'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -60,13 +76,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                 controller: _oldPasswordController,
                 obscureText: true,
                 decoration: const InputDecoration(
-                  labelText: 'Old Password',
+                  labelText: 'O L D   P A S S W O R D',
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your old password';
                   }
-                  // Add custom validation if needed
                   return null;
                 },
               ),
@@ -75,13 +90,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                 controller: _newPasswordController,
                 obscureText: true,
                 decoration: const InputDecoration(
-                  labelText: 'New Password',
+                  labelText: 'N E W   P A S S W O R D',
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a new password';
                   }
-                  // Add custom validation if needed
                   return null;
                 },
               ),
@@ -90,7 +104,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 controller: _confirmPasswordController,
                 obscureText: true,
                 decoration: const InputDecoration(
-                  labelText: 'Confirm New Password',
+                  labelText: 'C O N F I R M   N E W   P A S S W O R D',
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {

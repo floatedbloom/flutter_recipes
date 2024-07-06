@@ -121,10 +121,11 @@ class DatabaseHelper {
     return await db.query('users');
   }
 
-  Future<int> updateUser(Map<String, dynamic> user) async {
+  Future<int> updatePassword(String username, String newPassword) async {
     Database db = await database;
-    int id = user['id'];
-    return await db.update('users', user, where: 'id = ?', whereArgs: [id]);
+    return await db.rawUpdate(
+      'UPDATE users SET password = ? WHERE username = ?', [newPassword,username],
+    );
   }
 
   Future<int> deleteUser(int id) async {

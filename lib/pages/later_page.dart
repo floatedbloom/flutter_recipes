@@ -48,7 +48,7 @@ class _LaterPageState extends State<LaterPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No saved for later recipes found.'));
+            return const Center(child: Text('No recipes saved for later.'));
           } else {
             List<Recipe> favorites = snapshot.data!;
             return ListView.builder(
@@ -77,7 +77,9 @@ class _LaterPageState extends State<LaterPage> {
                       userId = SessionManager.instance.currentUserId ?? 0;
                       int recipeId = await dbHelper.getIdByRecipe(recipe) ?? 0;
                       dbHelper.removeLaterRecipe(userId, recipeId);
-                      favorites.remove(recipe);
+                      setState(() {
+                        favorites.remove(recipe);
+                      });
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Recipe removed from Try Later')),
                       );

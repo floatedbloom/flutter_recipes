@@ -11,81 +11,84 @@ class PersonalPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: GridView.count(
-          crossAxisCount: 2,
-          mainAxisSpacing: 20.0,
-          crossAxisSpacing: 20.0,
-          padding: const EdgeInsets.all(20.0),
-          children: [
-            ElevatedButton(
-              style: ButtonStyle(
-                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(color: Colors.blueGrey)
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: 500),
+          child: GridView.count(
+            crossAxisCount: 2,
+            mainAxisSpacing: 20.0,
+            crossAxisSpacing: 20.0,
+            padding: const EdgeInsets.all(20.0),
+            children: [
+              ElevatedButton(
+                style: ButtonStyle(
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: const BorderSide(color: Colors.blueGrey)
+                    )
                   )
-                )
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const FavoritesPage()),
+                  );
+                },
+                child: const Text("F A V O R I T E S"),
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const FavoritesPage()),
-                );
-              },
-              child: const Text("Favorites"),
-            ),
-            ElevatedButton(
-              style: ButtonStyle(
-                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(color: Colors.blueGrey)
+              ElevatedButton(
+                style: ButtonStyle(
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: const BorderSide(color: Colors.blueGrey)
+                    )
                   )
-                )
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LaterPage()),
+                  );
+                },
+                child: const Text("T R Y   L A T E R"),
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LaterPage()),
-                );
-              },
-              child: const Text("Try Later"),
-            ),
-            ElevatedButton(
-              style: ButtonStyle(
-                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(color: Colors.blueGrey)
+              ElevatedButton(
+                style: ButtonStyle(
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: const BorderSide(color: Colors.blueGrey)
+                    )
                   )
-                )
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const OwnRecipes()),
+                  );
+                },
+                child: const Text("M Y   R E C I P E S"),
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const OwnRecipes()),
-                );
-              },
-              child: const Text("My Recipes"),
-            ),
-            ElevatedButton(
-              style: ButtonStyle(
-                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(color: Colors.blueGrey)
+              ElevatedButton(
+                style: ButtonStyle(
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: const BorderSide(color: Colors.blueGrey)
+                    )
                   )
-                )
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ChangePassword()),
+                  );
+                },
+                child: const Text("   C H A N G E\nP A S S W O R D"),
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ChangePassword()),
-                );
-              },
-              child: const Text("Change Password"),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

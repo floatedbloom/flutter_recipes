@@ -55,8 +55,6 @@ class _CreatePageState extends State<CreatePage> {
       );
 
       await dbHelper.insertRecipe(newRecipe.toMap());
-
-      Navigator.pop(context);
     }
   }
 
@@ -163,7 +161,8 @@ class _CreatePageState extends State<CreatePage> {
                 padding: const EdgeInsets.all(25.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    _saveRecipe;
+                    _saveRecipe();
+                    Navigator.of(context).pop();
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Recipe created')),
                     );

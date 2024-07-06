@@ -48,7 +48,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No favorite recipes found.'));
+            return const Center(child: Text('No favorite recipes.'));
           } else {
             List<Recipe> favorites = snapshot.data!;
             return ListView.builder(
@@ -77,6 +77,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       userId = SessionManager.instance.currentUserId ?? 0;
                       int recipeId = await dbHelper.getIdByRecipe(recipe) ?? 0;
                       dbHelper.removeFavoriteRecipe(userId, recipeId);
+                      setState(() {
+                        favorites.remove(recipe);
+                      });
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Recipe removed from Favorites')),
                       );

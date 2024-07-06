@@ -18,7 +18,7 @@ class SessionManager {
     //get user from database and set it as session
     Map<String, dynamic>? user = await DatabaseHelper().getUserByUsername(username);
     if (user != null) {
-      currentUsername = username;
+      currentUsername = username as String;
       currentUserId = user['id'] as int;
     }
   }

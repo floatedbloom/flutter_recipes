@@ -53,59 +53,71 @@ class RecipeTile extends StatelessWidget {
                       child: Material(
                         color: Colors.transparent,
                         //scrollable
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              //top is recipe name
-                              Container(
-                                padding: const EdgeInsets.all(16.0),
-                                color: const Color.fromARGB(255, 149, 91, 87),
-                                child: Text(
-                                  recipe.name,
-                                  style: const TextStyle(color: Colors.white, fontSize: 24),
+                        child: Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                //top is recipe name
+                                Container(
+                                  padding: const EdgeInsets.all(16.0),
+                                  width: MediaQuery.of(context).size.width * 0.9,
+                                  color: const Color.fromARGB(255, 43, 73, 86),
+                                  child: Center(
+                                    child: Text(
+                                      recipe.name,
+                                      style: const TextStyle(color: Colors.white, fontSize: 24),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              //general info
-                              Container(
-                                padding: const EdgeInsets.all(16.0),
-                                color: const Color.fromARGB(255, 87, 149, 143),
-                                child: Column(
-                                  children: [
-                                    Text('Creator: ${recipe.creator}'),
-                                    Text('Rating: ${recipe.rating}'),
-                                    Text('Healthiness: ${recipe.health}'),
-                                    Text('Type of food: ${recipe.type}'),
-                                    Text('Specified diet: ${recipe.diet}'),
-                                    Text('Ingredients: ${recipe.ingredients}'),
-                                    Image(image: recipe.image) 
-                                  ],
+                                const SizedBox(height: 10),
+                                //general info
+                                Container(
+                                  padding: const EdgeInsets.all(25.0),
+                                  color: const Color.fromARGB(255, 87, 149, 143),
+                                  child: Column(
+                                    children: [
+                                      Text('Creator: ${recipe.creator}', style: const TextStyle(color: Color.fromARGB(255, 121, 54, 75), fontSize: 20, fontWeight: FontWeight.bold)),
+                                      const SizedBox(height: 10),
+                                      Text('Rating: ${recipe.rating}', style: const TextStyle(color: Color.fromARGB(255, 121, 54, 75), fontSize: 20, fontWeight: FontWeight.bold)),
+                                      const SizedBox(height: 10),
+                                      Text('Healthiness: ${recipe.health}', style: const TextStyle(color: Color.fromARGB(255, 121, 54, 75), fontSize: 20, fontWeight: FontWeight.bold)),
+                                      const SizedBox(height: 10),
+                                      Text('Type of food: ${recipe.type}', style: const TextStyle(color: Color.fromARGB(255, 121, 54, 75), fontSize: 20, fontWeight: FontWeight.bold)),
+                                      const SizedBox(height: 10),
+                                      Text('Specified diet: ${recipe.diet}', style: const TextStyle(color: Color.fromARGB(255, 121, 54, 75), fontSize: 20, fontWeight: FontWeight.bold)),
+                                      const SizedBox(height: 10),
+                                      Text('Ingredients: ${recipe.ingredients}', style: const TextStyle(color: Color.fromARGB(255, 121, 54, 75), fontSize: 20, fontWeight: FontWeight.bold)),
+                                      const SizedBox(height: 20),
+                                      Image(image: recipe.image) 
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),                              
-                              //5 star rating scale
-                              //this is hard
-                              const SizedBox(height: 10),
-                              //favorite button
-                              CupertinoButton(
-                                child: const Text('Favorite'),
-                                onPressed: () {
-                                  addFavorite(recipe);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Recipe added to Favorites')),
-                                  );
-                                },
-                              ),
-                              const SizedBox(height: 5),
-                              //close button
-                              CupertinoButton(
-                                child: const Text('Close'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
+                                const SizedBox(height: 10),                              
+                                //5 star rating scale
+                                //this is hard
+                                const SizedBox(height: 10),
+                                
+                                //favorite button
+                                CupertinoButton(
+                                  child: const Text('Favorite'),
+                                  onPressed: () {
+                                    addFavorite(recipe);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('Recipe added to Favorites')),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(height: 5),
+                                //close button
+                                CupertinoButton(
+                                  child: const Text('Close'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
