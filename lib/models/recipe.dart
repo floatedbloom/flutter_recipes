@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class Recipe {
   final String name;
   double rating = 5;
+  int rater = 0;
   final String creator;
   final List<String> ingredients;
   final double health;
@@ -22,6 +23,7 @@ class Recipe {
       'name': name,
       'rating': rating,
       'creator': creator,
+      'rater': rater,
       'ingredients': ingredients.join(','),
       'health': health,
       'type': type,

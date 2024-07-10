@@ -6,22 +6,35 @@ import 'package:flutter_recipes/data/database.dart';
 import 'package:flutter_recipes/models/recipe.dart';
 import 'package:flutter_recipes/session/session_manager.dart';
 
-class RecipeTile extends StatelessWidget {
+// ignore: must_be_immutable
+class RecipeTile extends StatefulWidget {
   Recipe recipe;
-  final DatabaseHelper dbHelper = DatabaseHelper();
 
   RecipeTile({super.key, required this.recipe});
 
+  @override
+  State<RecipeTile> createState() => _RecipeTileState();
+}
+
+class _RecipeTileState extends State<RecipeTile> {
+  final DatabaseHelper dbHelper = DatabaseHelper();
+  int? selectedRating;
+
   void addFavorite(Recipe r) async {
     int userId = SessionManager.instance.currentUserId ?? 0;
-    int recipeId = await dbHelper.getIdByRecipe(recipe) ?? 0;
+    int recipeId = await dbHelper.getIdByRecipe(widget.recipe) ?? 0;
     dbHelper.addFavoriteRecipe(userId, recipeId);
   }
 
   void addLater(Recipe r) async {
     int userId = SessionManager.instance.currentUserId ?? 0;
-    int recipeId = await dbHelper.getIdByRecipe(recipe) ?? 0;
+    int recipeId = await dbHelper.getIdByRecipe(widget.recipe) ?? 0;
     dbHelper.addLaterRecipe(userId, recipeId);
+  }
+
+  void addRating(Recipe r, int myRating) async {
+    int recipeId = await dbHelper.getIdByRecipe(widget.recipe) ?? 0;
+    await dbHelper.addRating(recipeId, myRating);
   }
 
   @override
@@ -52,7 +65,7 @@ class RecipeTile extends StatelessWidget {
                                 color: const Color.fromARGB(255, 43, 73, 86),
                                 child: Center(
                                   child: Text(
-                                    recipe.name,
+                                    widget.recipe.name,
                                     style: const TextStyle(color: Colors.white, fontSize: 24),
                                   ),
                                 ),
@@ -64,27 +77,70 @@ class RecipeTile extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Creator: ${recipe.creator}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                                    Text('Creator: ${widget.recipe.creator}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 10),
-                                    Text('Rating: ${recipe.rating}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                                    Text('Rating: ${widget.recipe.rating}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 10),
-                                    Text('Healthiness: ${recipe.health}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                                    Text('Healthiness: ${widget.recipe.health}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 10),
-                                    Text('Type of food: ${recipe.type}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                                    Text('Type of food: ${widget.recipe.type}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 10),
-                                    Text('Specified diet: ${recipe.diet}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                                    Text('Specified diet: ${widget.recipe.diet}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 10),
-                                    Text('Ingredients: ${recipe.ingredients}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                                    Text('Ingredients: ${widget.recipe.ingredients}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 20),
-                                    Image(image: recipe.image)
+                                    Image(image: widget.recipe.image)
                                   ],
                                 ),
+                              ),
+                              const SizedBox(height: 10),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      for (int i = 1; i <= 5; i++)
+                                        CupertinoButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              selectedRating = i;
+                                            });
+                                          },
+                                          child: Icon(
+                                            selectedRating != null && i <= selectedRating!
+                                                ? CupertinoIcons.star_fill
+                                                : CupertinoIcons.star,
+                                            color: selectedRating != null && i <= selectedRating!
+                                                ? Colors.orange
+                                                : Colors.grey,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 10),
+                                  CupertinoButton(
+                                    onPressed: () {
+                                      if (selectedRating != null) {
+                                        addRating(widget.recipe, selectedRating as int);
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text('Recipe rated with $selectedRating stars')),
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Please select a rating')),
+                                        );
+                                      }
+                                    },
+                                    child: const Text('Rate Recipe'),
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 10),
                               CupertinoButton(
                                 child: const Text('Favorite'),
                                 onPressed: () {
-                                  addFavorite(recipe);
+                                  addFavorite(widget.recipe);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(content: Text('Recipe added to Favorites')),
                                   );
@@ -132,7 +188,7 @@ class RecipeTile extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
                   child: Text(
-                    recipe.name,
+                    widget.recipe.name,
                     style: const TextStyle(
                       color: Color.fromARGB(255, 67, 63, 63),
                       fontWeight: FontWeight.bold,
@@ -145,7 +201,7 @@ class RecipeTile extends StatelessWidget {
             Center(
               child: ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                child: Image(image: recipe.image),
+                child: Image(image: widget.recipe.image),
               ),
             ),
             Padding(
@@ -157,13 +213,13 @@ class RecipeTile extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(child: Text(recipe.creator, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18))),
+                        Center(child: Text(widget.recipe.creator, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18))),
                         const SizedBox(height: 5),
                         Center(
                           child: Row(
                             children: [
                               const Icon(Icons.star, color: Colors.yellow, size: 28),
-                              Text('${recipe.rating}', style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20,)),
+                              Text('${widget.recipe.rating}', style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20,)),
                             ],
                           ),
                         ),
@@ -172,7 +228,7 @@ class RecipeTile extends StatelessWidget {
                           child: Row(
                             children: [
                               const Icon(Icons.favorite, color: Colors.red, size: 28),
-                              Text('${recipe.health}', style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 20,)),
+                              Text('${widget.recipe.health}', style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 20,)),
                             ],
                           ),
                         ),
@@ -181,7 +237,7 @@ class RecipeTile extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      addLater(recipe);
+                      addLater(widget.recipe);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Recipe added to Try Later')),
                       );

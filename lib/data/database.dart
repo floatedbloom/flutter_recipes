@@ -39,6 +39,7 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         rating DOUBLE,
+        raters int,
         creator TEXT,
         ingredients TEXT,
         health DOUBLE,
@@ -229,6 +230,33 @@ class DatabaseHelper {
       where: 'recipes.id IN (SELECT recipe_id FROM later_recipes WHERE user_id = ?)',
       whereArgs: [userId],
     );
+  }
+
+  Future<void> addRating(int recipeId, int newRating) async {
+    Database db = await database;
+    double rating = await db.query(
+      'recipes', 
+      columns: ['rating.*'],
+      where: 'id = ?',
+      whereArgs: [recipeId],
+    ) as double;
+
+    int raters = await db.query(
+      'recipes', 
+      columns: ['raters.*'],
+      where: 'id = ?',
+      whereArgs: [recipeId],
+    ) as int;
+
+    int updatedRaters = raters + 1;
+
+    double updatedRating = ((rating * raters) + newRating) / updatedRaters;
+
+    await db.rawUpdate(
+      'UPDATE recipes SET rating=?, raters=? WHERE id=?', 
+      [updatedRating,updatedRaters,recipeId]
+    );
+
   }
 }
 
