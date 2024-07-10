@@ -30,7 +30,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
           health: recipeMap['health'],
           type: recipeMap['type'],
           diet: recipeMap['diet'],
-          image: AssetImage(recipeMap['image']),
+          rating: recipeMap['rating'],
+          raters: recipeMap['raters'],
+          //image: AssetImage(recipeMap['image']),
         );
       }).toList();
     });
@@ -56,8 +58,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
               itemBuilder: (context, index) {
                 Recipe recipe = favorites[index];
                 return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: recipe.image,
+                  leading: const CircleAvatar(
+                    backgroundColor: Colors.amber,
                     radius: 25,
                   ),
                   title: Text(recipe.name),

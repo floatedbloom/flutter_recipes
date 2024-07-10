@@ -1,4 +1,4 @@
-import 'dart:io';
+//import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_recipes/data/database.dart';
@@ -29,7 +29,9 @@ class _OwnRecipesState extends State<OwnRecipes> {
         health: recipeMap['health'],
         type: recipeMap['type'],
         diet: recipeMap['diet'],
-        image: FileImage(File(recipeMap['image'])),
+        rating: recipeMap['rating'],
+        raters: recipeMap['raters'],
+        //image: FileImage(File(recipeMap['image'])),
       );
     }).toList();
 
@@ -55,7 +57,7 @@ class _OwnRecipesState extends State<OwnRecipes> {
           Recipe recipe = recipes[index];
           return ListTile(
             leading: CircleAvatar(
-              backgroundImage: recipe.image,
+              backgroundColor: Color.fromARGB(255, 175, 102, 163),
               radius: 25,
             ),
             title: Text(recipe.name),

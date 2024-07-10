@@ -1,10 +1,11 @@
-import 'dart:io';
+//import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_recipes/data/database.dart';
 import 'package:flutter_recipes/models/recipe.dart';
+import 'package:flutter_recipes/pages/home_page.dart';
 import 'package:flutter_recipes/session/session_manager.dart';
-import 'package:image_picker/image_picker.dart';
+//import 'package:image_picker/image_picker.dart';
 
 //cant create a recipe with a name you already used
 //show creation screen
@@ -27,9 +28,9 @@ class _CreatePageState extends State<CreatePage> {
   final TextEditingController _healthController = TextEditingController();
   final TextEditingController _typeController = TextEditingController();
   final TextEditingController _dietController = TextEditingController();
-  final TextEditingController _imageController = TextEditingController();
+  //final TextEditingController _imageController = TextEditingController();
 
-  File? _image;
+  //File? _image;
 
   @override
   void dispose() {
@@ -38,7 +39,7 @@ class _CreatePageState extends State<CreatePage> {
     _healthController.dispose();
     _typeController.dispose();
     _dietController.dispose();
-    _imageController.dispose();
+    //_imageController.dispose();
     super.dispose();
   }
 
@@ -51,14 +52,16 @@ class _CreatePageState extends State<CreatePage> {
         health: double.parse(_healthController.text),
         type:_typeController.text,
         diet: _dietController.text,
-        image: AssetImage(_imageController.text),
+        rating: 0,
+        raters: 0,
+        //image: AssetImage(_imageController.text),
       );
 
       await dbHelper.insertRecipe(newRecipe.toMap());
     }
   }
 
-  Future<void> _pickImage() async {
+  /*Future<void> _pickImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
@@ -69,7 +72,7 @@ class _CreatePageState extends State<CreatePage> {
       });
     }
 
-  }
+  }*/
 
   String? _validateIngredients(String? value) {
     if (value == null || value.isEmpty) {
@@ -142,7 +145,7 @@ class _CreatePageState extends State<CreatePage> {
                   return null;
                 },
               ),
-              TextFormField(
+              /* TextFormField(
                 controller: _imageController,
                 decoration: const InputDecoration(labelText: "Image Path"),
                 validator: (value) {
@@ -156,13 +159,13 @@ class _CreatePageState extends State<CreatePage> {
               ),
               _image != null
                   ? Image.file(_image!)
-                  : const Text('No image selected.'),
+                  : const Text('No image selected.'),*/
               Padding(
                 padding: const EdgeInsets.all(25.0),
                 child: ElevatedButton(
                   onPressed: () {
                     _saveRecipe();
-                    Navigator.of(context).pop();
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Recipe created')),
                     );

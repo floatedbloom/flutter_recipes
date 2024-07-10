@@ -1,4 +1,4 @@
-import 'dart:io';
+//import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_recipes/components/recipe_tile.dart';
@@ -33,7 +33,9 @@ class _SearchPageState extends State<SearchPage> {
         health: recipeMap['health'],
         type: recipeMap['type'],
         diet: recipeMap['diet'],
-        image: FileImage(File(recipeMap['image'])),
+        rating: recipeMap['rating'],
+        raters: recipeMap['raters'],
+        //image: FileImage(File(recipeMap['image'])),
       );
     }).toList();
 

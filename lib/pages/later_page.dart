@@ -30,7 +30,9 @@ class _LaterPageState extends State<LaterPage> {
           health: recipeMap['health'],
           type: recipeMap['type'],
           diet: recipeMap['diet'],
-          image: AssetImage(recipeMap['image']),
+          rating: recipeMap['rating'],
+          raters: recipeMap['raters'],
+          //image: AssetImage(recipeMap['image']),
         );
       }).toList();
     });
@@ -56,8 +58,8 @@ class _LaterPageState extends State<LaterPage> {
               itemBuilder: (context, index) {
                 Recipe recipe = favorites[index];
                 return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: recipe.image,
+                  leading: const CircleAvatar(
+                    backgroundColor: Color.fromARGB(255, 127, 142, 168),
                     radius: 25,
                   ),
                   title: Text(recipe.name),

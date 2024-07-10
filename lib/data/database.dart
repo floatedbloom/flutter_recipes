@@ -45,7 +45,6 @@ class DatabaseHelper {
         health DOUBLE,
         type TEXT,
         diet TEXT,
-        image TEXT
       )
     ''');
     await db.execute('''
@@ -234,29 +233,51 @@ class DatabaseHelper {
 
   Future<void> addRating(int recipeId, int newRating) async {
     Database db = await database;
-    double rating = await db.query(
-      'recipes', 
-      columns: ['rating.*'],
+    
+    // Get the current rating
+    List<Map<String, dynamic>> ratingResult = await db.query(
+      'recipes',
+      columns: ['rating'],
       where: 'id = ?',
       whereArgs: [recipeId],
-    ) as double;
-
-    int raters = await db.query(
-      'recipes', 
-      columns: ['raters.*'],
-      where: 'id = ?',
-      whereArgs: [recipeId],
-    ) as int;
-
-    int updatedRaters = raters + 1;
-
-    double updatedRating = ((rating * raters) + newRating) / updatedRaters;
-
-    await db.rawUpdate(
-      'UPDATE recipes SET rating=?, raters=? WHERE id=?', 
-      [updatedRating,updatedRaters,recipeId]
     );
 
+    // Ensure there is a result
+    if (ratingResult.isEmpty) {
+      throw Exception('Recipe not found');
+    }
+    
+    // Extract the rating from the result set
+    double rating = ratingResult.first['rating'] as double;
+
+    // Get the current raters count
+    List<Map<String, dynamic>> ratersResult = await db.query(
+      'recipes',
+      columns: ['raters'],
+      where: 'id = ?',
+      whereArgs: [recipeId],
+    );
+
+    // Ensure there is a result
+    if (ratersResult.isEmpty) {
+      throw Exception('Recipe not found');
+    }
+
+    // Extract the raters count from the result set
+    int raters = ratersResult.first['raters'] as int;
+
+    // Calculate the updated values
+    int updatedRaters = raters + 1;
+    double updatedRating = ((rating * raters) + newRating) / updatedRaters;
+
+    //round
+    double roundedUpdatedRating = double.parse(updatedRating.toStringAsFixed(1));
+
+    // Update the database
+    await db.rawUpdate(
+      'UPDATE recipes SET rating=?, raters=? WHERE id=?',
+      [roundedUpdatedRating, updatedRaters, recipeId]
+    );
   }
 }
 

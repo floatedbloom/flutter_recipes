@@ -1,4 +1,4 @@
-import 'dart:io';
+//import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -33,7 +33,9 @@ class _HotPageState extends State<HotPage> {
         health: recipeMap['health'],
         type: recipeMap['type'],
         diet: recipeMap['diet'],
-        image: FileImage(File(recipeMap['image'])),
+        rating: recipeMap['rating'],
+        raters: recipeMap['raters'],
+        //image: FileImage(File(recipeMap['image'])),
       );
     }).toList();
     setState(() {

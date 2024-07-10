@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipes/data/database.dart';
 import 'package:flutter_recipes/models/recipe.dart';
+import 'package:flutter_recipes/pages/home_page.dart';
 import 'package:flutter_recipes/session/session_manager.dart';
 
 // ignore: must_be_immutable
@@ -88,8 +89,8 @@ class _RecipeTileState extends State<RecipeTile> {
                                     Text('Specified diet: ${widget.recipe.diet}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 10),
                                     Text('Ingredients: ${widget.recipe.ingredients}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
-                                    const SizedBox(height: 20),
-                                    Image(image: widget.recipe.image)
+                                    //const SizedBox(height: 20),
+                                    //Image(image: widget.recipe.image)
                                   ],
                                 ),
                               ),
@@ -122,7 +123,11 @@ class _RecipeTileState extends State<RecipeTile> {
                                   CupertinoButton(
                                     onPressed: () {
                                       if (selectedRating != null) {
-                                        addRating(widget.recipe, selectedRating as int);
+                                        addRating(widget.recipe, selectedRating!);
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => const HomePage()),
+                                        );
                                         ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(content: Text('Recipe rated with $selectedRating stars')),
                                         );
@@ -198,12 +203,8 @@ class _RecipeTileState extends State<RecipeTile> {
                 ),
               ),
             ),
-            Center(
-              child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                child: Image(image: widget.recipe.image),
-              ),
-            ),
+            const Center(
+               child: ClipRRect(borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),  child: Icon(Icons.hot_tub),),),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
